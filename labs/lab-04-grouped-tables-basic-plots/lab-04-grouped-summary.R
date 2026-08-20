@@ -1,0 +1,17 @@
+args <- commandArgs(trailingOnly = FALSE)
+file_arg <- grep("^--file=", args, value = TRUE)
+lab_dir <- if (length(file_arg)) dirname(normalizePath(sub("^--file=", "", file_arg[1]))) else normalizePath(getwd())
+data_path <- function(name) file.path(lab_dir, "data", name)
+out_path <- function(name) file.path(lab_dir, "outputs", name)
+dir.create(out_path(""), recursive = TRUE, showWarnings = FALSE)
+options(stringsAsFactors = FALSE)
+
+h <- read.csv(data_path("health-research.csv"))
+freq <- as.data.frame(table(chest_pain=h$chest_pain, smoker=h$smoker)); names(freq)[3] <- "count"
+freq$proportion_within_smoker <- ave(freq$count, freq$smoker, FUN=function(z) z/sum(z))
+grouped <- do.call(rbind,lapply(split(h,h$chest_pain),function(g)data.frame(chest_pain=g$chest_pain[1],n=nrow(g),mean_weight=mean(g$weight),median_weight=median(g$weight),sd_weight=sd(g$weight))))
+control <- data.frame(control=c("Rows","Frequency total","Maximum proportion sum error"),value=c(nrow(h),sum(freq$count),max(abs(aggregate(proportion_within_smoker~smoker,freq,sum)$proportion_within_smoker-1))))
+write.csv(freq,out_path("lab-04-frequency-table.csv"),row.names=FALSE); write.csv(grouped,out_path("lab-04-grouped-statistics.csv"),row.names=FALSE); write.csv(control,out_path("lab-04-control.csv"),row.names=FALSE)
+png(out_path("lab-04-grouped-plots.png"),1200,650,res=130); par(mfrow=c(1,2),mar=c(8,4,3,1)); barplot(table(h$chest_pain),las=2,col="#1F6FEB",main="Observations by chest-pain category",ylab="Count"); boxplot(weight~chest_pain,h,las=2,col="#10B981",main="Weight by chest-pain category",ylab="Weight (kg)"); dev.off()
+stopifnot(sum(freq$count)==nrow(h), control$value[3]<1e-10)
+cat("Lab 4 complete\n")

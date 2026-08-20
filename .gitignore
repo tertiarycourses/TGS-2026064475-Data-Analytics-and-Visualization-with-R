@@ -1,0 +1,17 @@
+.DS_Store
+.env
+.env.*
+courseware/.env
+reference/
+assessment/
+.claude/
+courseware/build/
+courseware/assets/
+courseware/archive/
+qa/
+**/__pycache__/
+*.pyc
+labs/**/outputs/*.csv
+labs/**/outputs/*.png
+labs/**/outputs/*.txt
+!labs/**/outputs/README.md
