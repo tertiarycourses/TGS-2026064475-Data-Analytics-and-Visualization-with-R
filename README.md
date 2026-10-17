@@ -2,6 +2,15 @@
 
 WSQ courseware for **TGS-2026064475**, rebuilt from the legacy 154-slide programme and R exercise materials.
 
+| Course detail | Information |
+|---|---|
+| Course code | `TGS-2026064475` |
+| Programme | WSQ |
+| Duration | 2 days / 16 hours, including 2 assessment hours |
+| Registration | [View course details and register](https://www.tertiarycourses.com.sg/casl-data-analytics-and-visualization-with-r.html) |
+| Funding | Up to 70% course fee funding for eligible learners (e.g. SME employees, Mid-career Enhanced Subsidy). Eligibility and terms apply — see the course page. |
+| Provider | Tertiary Infotech Academy Pte Ltd |
+
 ## Package
 
 - Visual, concept-led trainer slides (`v12.0`) with editable native PowerPoint charts.
